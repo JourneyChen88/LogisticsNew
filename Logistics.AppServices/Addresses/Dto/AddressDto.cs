@@ -1,5 +1,5 @@
 using Logistics.EF.Core;
-using Logistics.Models;
+using Logistics.EF.Core;
 using System;
 using System.ComponentModel.DataAnnotations;
 

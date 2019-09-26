@@ -1,5 +1,5 @@
 
-namespace Logistics.Models
+namespace Logistics.EF.Core
 {
     using System;
     using System.Collections.Generic;

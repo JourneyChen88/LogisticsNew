@@ -1,6 +1,6 @@
 ﻿using Logistics.AppServices;
 using Logistics.EF.Core;
-using Logistics.Models;
+using Logistics.EF.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -55,9 +55,9 @@ namespace Logistics.WebApi
             services.AddScoped<IOrderAppService, OrderAppService>();
             services.AddScoped<IAddressAppService, AddressAppService>();
 
-            services.AddScoped<IRepository<User>, Repository<User>>();
-            services.AddScoped<IRepository<Order>, Repository<Order>>();
-            services.AddScoped<IRepository<Address>, Repository<Address>>();
+            services.AddScoped<IRepository<User,long>, Repository<User, long>>();
+            services.AddScoped<IRepository<Order,Guid>, Repository<Order, Guid>>();
+            services.AddScoped<IRepository<Address, Guid>, Repository<Address, Guid>>();
 
 
             //注册swager生成器

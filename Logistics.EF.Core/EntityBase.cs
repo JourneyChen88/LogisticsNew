@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Logistics.Models
+namespace Logistics.EF.Core
 {
     public class EntityBase : EntityBase<Guid>
     {
@@ -9,7 +9,7 @@ namespace Logistics.Models
     public class EntityBase<TPrimaryKey> 
     {
         /// <summary>唯一标识</summary>
-        public TPrimaryKey Id { get; set; }
+        public Guid Id { get; set; }
         /// <summary>
         /// 创建世间
         /// </summary>

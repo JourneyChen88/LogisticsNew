@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logistics.AppServices", "Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logistics.EF.Core", "Logistics.EF.Core\Logistics.EF.Core.csproj", "{7F778D36-BE68-4AF3-8EBF-6E3054ABE24B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.WebApi", "Logistics.WebApi\Logistics.WebApi.csproj", "{6491E083-7215-4B4C-9548-DBC722892A7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logistics.WebApi", "Logistics.WebApi\Logistics.WebApi.csproj", "{6491E083-7215-4B4C-9548-DBC722892A7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

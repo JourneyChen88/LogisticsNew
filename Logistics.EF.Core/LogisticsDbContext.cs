@@ -1,8 +1,10 @@
-﻿using Logistics.Models;
+﻿using Logistics.EF.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Logistics.EF.Core
 {
@@ -30,10 +32,11 @@ namespace Logistics.EF.Core
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Address>().ToTable("Address");
             modelBuilder.Entity<Evaluate>().ToTable("Evaluate");
-            modelBuilder.Entity<BankAccount>().ToTable("BankAccount");
+            modelBuilder.Entity<Account>().ToTable("BankAccount");
             modelBuilder.Entity<Order>().ToTable("Order");
             modelBuilder.Entity<OrderDetail>().ToTable("OrderDetail");
-        }
 
+        }
+       
     }
 }

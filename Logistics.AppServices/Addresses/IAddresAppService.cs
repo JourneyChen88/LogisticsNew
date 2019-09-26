@@ -12,7 +12,7 @@ namespace Logistics.AppServices
 
         Task<List<AddressDto>> GetPageList(int index, int size);
         Task<AddressDto> GetById(Guid id);
-        Task<AddressDto> Add(AddressCreateInput dto);
+        Task<bool> Add(AddressCreateInput dto);
 
         Task<bool> Delete(Guid id);
 

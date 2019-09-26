@@ -11,6 +11,11 @@
     <DocumentationFile>bin\Debug\netcoreapp2.2\Logistics.WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>bin\Debug\Logistics.WebApi.xml</DocumentationFile>
+  </PropertyGroup>
+
 
 
   <ItemGroup>

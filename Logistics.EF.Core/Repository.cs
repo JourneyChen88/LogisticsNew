@@ -1,4 +1,5 @@
 ﻿using Logistics.EF.Core;
+using Logistics.EF.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Logistics.EF.Core
     /// 服务层基类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Repository<T> : IRepository<T> where T : class, new()
+    public class Repository<T, TPrimaryKey> : IRepository<T, TPrimaryKey> where T : EntityBase<TPrimaryKey>, new()
     {
         private readonly LogisticsDbContext _context = null;
         private readonly DbSet<T> _dbSet;
@@ -21,45 +22,43 @@ namespace Logistics.EF.Core
             _context = context;
             _dbSet = _context.Set<T>();
         }
-        public T GetById(object id)
-        {
-            return this._dbSet.Find(id);
-        }
+
         public bool Add(T entity)
         {
             _dbSet.Add(entity);
             return _context.SaveChanges() > 0;
 
         }
-
-        public long Count()
-        {
-            return _dbSet.LongCount();
-        }
-
         public bool Delete(object id)
         {
             var entity = _dbSet.Find(id);
-            _dbSet.Remove(entity);
+            entity.IsDeleted = true;
+            _dbSet.Update(entity);
             return _context.SaveChanges() > 0;
-        }
-
-      
-
-        public List<T> GetPageList(int pageIndex, int pageSize)
-        {
-            var list = _dbSet.Skip(pageIndex* pageSize).Take(pageSize).ToList();
-            return list;
-        }
-        public List<T> GetAll()
-        {
-            var list = _dbSet.ToList();
-            return list;
         }
         public bool Update(T entity)
         {
             _dbSet.Update(entity);
             return _context.SaveChanges() > 0;
+        }
+        public T GetById(object id)
+        {
+            return this._dbSet.Where(a => a.IsDeleted == false).FirstOrDefault(a => a.Id.ToString() == id.ToString());
+        }
+        public long Count()
+        {
+            return _dbSet.Where(a => a.IsDeleted == false).LongCount();
+        }
+
+        public IEnumerable<T> GetPageList(int pageIndex, int pageSize)
+        {
+            var list = _dbSet.Where(a => a.IsDeleted == false).Skip(pageIndex * pageSize).Take(pageSize);
+            return list;
+        }
+        public IEnumerable<T> GetAll()
+        {
+            var list = _dbSet.Where(a => a.IsDeleted == false);
+            return list;
         }
     }
 

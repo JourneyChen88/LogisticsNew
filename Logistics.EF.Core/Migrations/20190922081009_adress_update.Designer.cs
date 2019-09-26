@@ -21,7 +21,7 @@ namespace Logistics.EF.Core.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Logistics.Models.Address", b =>
+            modelBuilder.Entity("Logistics.EF.Core.Address", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -47,7 +47,7 @@ namespace Logistics.EF.Core.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("Logistics.Models.BankAccount", b =>
+            modelBuilder.Entity("Logistics.EF.Core.BankAccount", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -73,7 +73,7 @@ namespace Logistics.EF.Core.Migrations
                     b.ToTable("BankAccount");
                 });
 
-            modelBuilder.Entity("Logistics.Models.Evaluate", b =>
+            modelBuilder.Entity("Logistics.EF.Core.Evaluate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -96,7 +96,7 @@ namespace Logistics.EF.Core.Migrations
                     b.ToTable("Evaluate");
                 });
 
-            modelBuilder.Entity("Logistics.Models.Order", b =>
+            modelBuilder.Entity("Logistics.EF.Core.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -140,7 +140,7 @@ namespace Logistics.EF.Core.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("Logistics.Models.OrderDetail", b =>
+            modelBuilder.Entity("Logistics.EF.Core.OrderDetail", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -169,7 +169,7 @@ namespace Logistics.EF.Core.Migrations
                     b.ToTable("OrderDetail");
                 });
 
-            modelBuilder.Entity("Logistics.Models.User", b =>
+            modelBuilder.Entity("Logistics.EF.Core.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()

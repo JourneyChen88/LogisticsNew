@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Logistics.Models
+namespace Logistics.EF.Core
 {
     public class Order : EntityBase
     {

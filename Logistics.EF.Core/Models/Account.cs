@@ -1,21 +1,21 @@
 
-namespace Logistics.Models
+namespace Logistics.EF.Core
 {
-    using Logistics.Models;
+    using Logistics.EF.Core;
     using System;
     using System.Collections.Generic;
 
     /// <summary>
     /// 银行账户
     /// </summary>
-    public class BankAccount : EntityBase
+    public class Account : EntityBase
     {
 
 
         /// <summary>
         /// 用户ID
         /// </summary>      
-        public virtual Guid UserId { get; set; }
+        public virtual long UserId { get; set; }
 
         /// <summary>
         /// 账号类型

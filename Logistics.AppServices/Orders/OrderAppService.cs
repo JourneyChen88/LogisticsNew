@@ -1,7 +1,7 @@
 ﻿using AgileObjects.AgileMapper;
 using Logistics.AppServices;
 using Logistics.EF.Core;
-using Logistics.Models;
+using Logistics.EF.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace Logistics.AppServices
 {
     public class OrderAppService : IOrderAppService
     {
-        private IRepository<Order> _Repository;
+        private IRepository<Order, Guid> _Repository;
 
-        public OrderAppService(IRepository<Order> repository)
+        public OrderAppService(IRepository<Order, Guid> repository)
         {
             _Repository = repository;
         }

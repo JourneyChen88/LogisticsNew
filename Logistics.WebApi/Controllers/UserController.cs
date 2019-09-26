@@ -26,20 +26,20 @@ namespace Logistics.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<List<UserDto>>> GetAll()
+        public async Task<AjaxResponse<List<UserDto>>> GetAll()
         {
             var res = await _appservice.GetAll();
-            return new ActionResult<List<UserDto>>(res);
+            return new AjaxResponse<List<UserDto>>(res);
         }
         /// <summary>
         /// 获取分页用户
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<List<UserDto>>> GetPageList(int index, int size)
+        public async Task<AjaxResponse<List<UserDto>>> GetPageList(int index, int size)
         {
             var res = await _appservice.GetPageList(index, size);
-            return new ActionResult<List<UserDto>>(res);
+            return new AjaxResponse<List<UserDto>>(res);
         }
         /// <summary>
         /// 手机密码登录
@@ -48,16 +48,16 @@ namespace Logistics.WebApi.Controllers
         /// <param name="pwd"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<UserDto>> LoginByPwd([FromBody]LoginInput input)
+        public async Task<AjaxResponse<UserDto>> LoginByPwd([FromBody]LoginInput input)
         {
             var res = await _appservice.LoginByPwd(input.Phone, input.PassWord);
-            return new ActionResult<UserDto>(res);
+            return new AjaxResponse<UserDto>(res);
         }
         [HttpPost]
-        public async Task<ActionResult<UserDto>>  Register([FromBody]RegisterDto dtos)
+        public async Task<AjaxResponse<UserDto>>  Register([FromBody]RegisterDto dtos)
         {
             var res = await _appservice.Register(dtos);
-            return new ActionResult<UserDto>(res);
+            return new AjaxResponse<UserDto>(res);
         }
        
     }

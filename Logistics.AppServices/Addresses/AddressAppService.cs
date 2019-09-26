@@ -1,7 +1,7 @@
 ﻿using AgileObjects.AgileMapper;
 using Logistics.AppServices;
 using Logistics.EF.Core;
-using Logistics.Models;
+using Logistics.EF.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace Logistics.AppServices
 {
     public class AddressAppService : IAddressAppService
     {
-        private IRepository<Address> _Repository;
+        private IRepository<Address,Guid> _Repository;
 
-        public AddressAppService(IRepository<Address> repository)
+        public AddressAppService(IRepository<Address, Guid> repository)
         {
             _Repository = repository;
         }
@@ -47,12 +47,11 @@ namespace Logistics.AppServices
             return await Task.FromResult(res);
         }
 
-        public async Task<AddressDto> Add(AddressCreateInput input)
+        public async Task<bool> Add(AddressCreateInput input)
         {
             var entity = Mapper.Map(input).ToANew<Address>();
-            var list = _Repository.Add(entity);
-            var dto = Mapper.Map(entity).ToANew<AddressDto>();
-            return await Task.FromResult(dto);
+            var res = _Repository.Add(entity);
+            return await Task.FromResult(res);
         }
 
         public async Task<bool>  Delete(Guid id)

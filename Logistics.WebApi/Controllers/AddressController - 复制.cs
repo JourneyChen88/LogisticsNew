@@ -9,15 +9,15 @@ namespace Logistics.WebApi.Controllers
 {
     [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class AddressController : ControllerBase
+    public class AccountController : ControllerBase
     {
-        private readonly IAddressAppService _appservice;
+        private readonly IAccountAppService _appservice;
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="appservice"></param>
-        public AddressController(IAddressAppService appservice)
+        public AccountController(IAccountAppService appservice)
         {
             _appservice = appservice;
         }
@@ -26,37 +26,37 @@ namespace Logistics.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<AjaxResponse<List<AddressDto>>> GetAll()
+        public async Task<AjaxResponse<List<AccountDto>>> GetAll()
         {
             var res = await _appservice.GetAll();
-            return new AjaxResponse<List<AddressDto>>(res);
+            return new AjaxResponse<List<AccountDto>>(res);
         }
         /// <summary>
         /// 获取分页
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<AjaxResponse<List<AddressDto>>> GetPageList(int index, int size)
+        public async Task<AjaxResponse<List<AccountDto>>> GetPageList(int index, int size)
         {
             var res = await _appservice.GetPageList(index, size);
-            return new AjaxResponse<List<AddressDto>>(res);
+            return new AjaxResponse<List<AccountDto>>(res);
         }
         /// <summary>
         /// 获取单个
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<AjaxResponse<AddressDto>> GetById(Guid id)
+        public async Task<AjaxResponse<AccountDto>> GetById(Guid id)
         {
             var res = await _appservice.GetById(id);
-            return new AjaxResponse<AddressDto>(res);
+            return new AjaxResponse<AccountDto>(res);
         }
         /// <summary>
         /// 增加
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<AjaxResponse<bool>> Add([FromBody]AddressCreateInput dto)
+        public async Task<AjaxResponse<bool>> Add([FromBody]AccountCreateInput dto)
         {
             var res = await _appservice.Add(dto);
             return new AjaxResponse<bool>(res);
@@ -76,7 +76,7 @@ namespace Logistics.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<AjaxResponse<bool>> Update([FromBody]AddressDto dto)
+        public async Task<AjaxResponse<bool>> Update([FromBody]AccountDto dto)
         {
             var res = await _appservice.Update(dto);
             return new AjaxResponse<bool>(res);

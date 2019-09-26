@@ -1,7 +1,7 @@
 ﻿using AgileObjects.AgileMapper;
 using Logistics.AppServices;
 using Logistics.EF.Core;
-using Logistics.Models;
+using Logistics.EF.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace Logistics.AppServices
 {
     public class UserAppService : IUserAppService
     {
-        private IRepository<User> _Repository;
+        private IRepository<User, long> _Repository;
 
-        public UserAppService(IRepository<User> userRepository)
+        public UserAppService(IRepository<User, long> userRepository)
         {
             _Repository = userRepository;
         }
