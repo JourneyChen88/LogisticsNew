@@ -11,6 +11,8 @@ namespace Logistics.EF.Core
     }
     public interface IRepository<T, TPrimaryKey> : ITransientDependency where T : EntityBase<TPrimaryKey>, new()
     {
+
+        bool AddRange(List<T> entitys);
         /// <summary>
         /// 泛型方法，通过id获取实体
         /// </summary>
@@ -37,6 +39,7 @@ namespace Logistics.EF.Core
         /// <param name="entity"></param>
         /// <returns></returns>
         bool Add(T entity);
+
         /// <summary>
         /// 编辑
         /// </summary>

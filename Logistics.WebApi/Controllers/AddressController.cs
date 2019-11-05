@@ -26,9 +26,9 @@ namespace Logistics.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<AjaxResponse<List<AddressDto>>> GetAll()
+        public async Task<AjaxResponse<List<AddressDto>>> GetAll(long userId)
         {
-            var res = await _appservice.GetAll();
+            var res = await _appservice.GetAll(userId);
             return new AjaxResponse<List<AddressDto>>(res);
         }
         /// <summary>

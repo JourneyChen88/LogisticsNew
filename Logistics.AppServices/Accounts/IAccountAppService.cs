@@ -9,7 +9,8 @@ namespace Logistics.AppServices
     public interface IAccountAppService: ITransientDependency
 
     {
-        Task<List<AccountDto>> GetAll();
+        Task<List<AccountDto>> GetList();
+        Task<List<AccountDto>> GetAll(long userId);
 
         Task<List<AccountDto>> GetPageList(int index,int size);
 

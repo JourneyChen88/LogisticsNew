@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Logistics.EF.Core.Migrations
 {
     [DbContext(typeof(LogisticsDbContext))]
-    [Migration("20190910072059_init")]
+    [Migration("20190927021005_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,43 +21,7 @@ namespace Logistics.EF.Core.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Logistics.EF.Core.Asset", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AssetModel")
-                        .HasMaxLength(64);
-
-                    b.Property<string>("AssetNumber")
-                        .HasMaxLength(64);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<string>("DisplayName");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("Manufacturer");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(64);
-
-                    b.Property<DateTime?>("ProductionDate");
-
-                    b.Property<string>("Remark")
-                        .HasMaxLength(1024);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Asset");
-                });
-
-            modelBuilder.Entity("Logistics.EF.Core.BankAccount", b =>
+            modelBuilder.Entity("Logistics.EF.Core.Account", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -66,7 +30,7 @@ namespace Logistics.EF.Core.Migrations
 
                     b.Property<int>("AccountType");
 
-                    b.Property<int?>("BankType");
+                    b.Property<int>("BankType");
 
                     b.Property<DateTime>("CreationTime");
 
@@ -76,11 +40,37 @@ namespace Logistics.EF.Core.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<long>("UserId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("BankAccount");
+                    b.ToTable("Account");
+                });
+
+            modelBuilder.Entity("Logistics.EF.Core.Address", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<string>("DetailInfo")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("IsDefault");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("LinkPhone");
+
+                    b.Property<string>("Linker")
+                        .HasMaxLength(64);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Logistics.EF.Core.Evaluate", b =>
@@ -117,13 +107,13 @@ namespace Logistics.EF.Core.Migrations
 
                     b.Property<DateTime?>("DeadLine");
 
-                    b.Property<Guid?>("DeliverUser");
+                    b.Property<long?>("Deliver");
 
                     b.Property<float>("DestLat");
 
                     b.Property<float>("DestLng");
 
-                    b.Property<string>("Dstination");
+                    b.Property<string>("Destination");
 
                     b.Property<bool>("IsDeleted");
 
@@ -136,7 +126,7 @@ namespace Logistics.EF.Core.Migrations
 
                     b.Property<int>("OrderStatus");
 
-                    b.Property<Guid>("OrderUser");
+                    b.Property<long>("OrderUser");
 
                     b.Property<decimal>("Price");
 

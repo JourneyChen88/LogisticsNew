@@ -9,44 +9,40 @@ namespace Logistics.EF.Core.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Asset",
+                name: "Account",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 64, nullable: true),
-                    DisplayName = table.Column<string>(nullable: true),
-                    AssetNumber = table.Column<string>(maxLength: 64, nullable: true),
-                    Manufacturer = table.Column<string>(nullable: true),
-                    ProductionDate = table.Column<DateTime>(nullable: true),
-                    AssetModel = table.Column<string>(maxLength: 64, nullable: true),
-                    Remark = table.Column<string>(maxLength: 1024, nullable: true),
-                    IsActive = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Asset", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BankAccount",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    CreatorUserId = table.Column<long>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
                     AccountType = table.Column<int>(nullable: false),
                     AccountNo = table.Column<string>(nullable: true),
-                    BankType = table.Column<int>(nullable: true),
+                    BankType = table.Column<int>(nullable: false),
                     IsDefault = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BankAccount", x => x.Id);
+                    table.PrimaryKey("PK_Account", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Address",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Linker = table.Column<string>(maxLength: 64, nullable: true),
+                    LinkPhone = table.Column<string>(nullable: true),
+                    DetailInfo = table.Column<string>(maxLength: 256, nullable: true),
+                    IsDefault = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Address", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,13 +70,13 @@ namespace Logistics.EF.Core.Migrations
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    OrderUser = table.Column<Guid>(nullable: false),
+                    OrderUser = table.Column<long>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    DeliverUser = table.Column<Guid>(nullable: true),
+                    Deliver = table.Column<long>(nullable: true),
                     MailingAddress = table.Column<string>(maxLength: 64, nullable: true),
                     MailingLng = table.Column<float>(nullable: false),
                     MailingLat = table.Column<float>(nullable: false),
-                    Dstination = table.Column<string>(nullable: true),
+                    Destination = table.Column<string>(nullable: true),
                     DestLng = table.Column<float>(nullable: false),
                     DestLat = table.Column<float>(nullable: false),
                     Qty = table.Column<int>(nullable: false),
@@ -136,10 +132,10 @@ namespace Logistics.EF.Core.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Asset");
+                name: "Account");
 
             migrationBuilder.DropTable(
-                name: "BankAccount");
+                name: "Address");
 
             migrationBuilder.DropTable(
                 name: "Evaluate");

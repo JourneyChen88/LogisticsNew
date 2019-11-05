@@ -34,31 +34,27 @@ namespace Logistics.WebApi
             services.AddMvc();
 
             ////集中注册服务
-            //foreach (var item in GetClassName("Logistics.AppServices"))
-            //{
-            //    foreach (var typeArray in item.Value)
-            //    {
-            //        services.AddScoped(typeArray, item.Key);
-            //    }
-            //}
-            //foreach (var item in GetClassName("Logistics.EF.Core"))
-            //{
-            //    foreach (var typeArray in item.Value)
-            //    {
-            //        services.AddScoped(typeArray, item.Key);
-            //    }
-            //}
-
+            foreach (var item in GetClassName("Logistics.AppServices"))
+            {
+                foreach (var typeArray in item.Value)
+                {
+                    if (typeArray.Name.EndsWith("AppService"))
+                    {
+                        services.AddScoped(typeArray, item.Key);
+                    }
+                   
+                }
+            }
 
             //注册仓储
-            services.AddScoped<IUserAppService, UserAppService>();
-            services.AddScoped<IOrderAppService, OrderAppService>();
-            services.AddScoped<IAddressAppService, AddressAppService>();
-
-            services.AddScoped<IRepository<User,long>, Repository<User, long>>();
-            services.AddScoped<IRepository<Order,Guid>, Repository<Order, Guid>>();
-            services.AddScoped<IRepository<Address, Guid>, Repository<Address, Guid>>();
-
+            services.AddScoped(typeof(IRepository<, >), typeof(Repository<, >));
+           
+            //services.AddScoped<IUserAppService, UserAppService>();
+            //services.AddScoped<IOrderAppService, OrderAppService>();
+            //services.AddScoped<IAddressAppService, AddressAppService>();
+            //services.AddScoped<IAccountAppService, AccountAppService>();
+            //services.AddScoped<IDataDicAppService, DataDicAppService>();
+            //services.AddScoped<IDistributionAppService, DistributionAppService>();
 
             //注册swager生成器
             services.AddSwaggerGen(c =>

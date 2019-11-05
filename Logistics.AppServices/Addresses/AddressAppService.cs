@@ -18,11 +18,11 @@ namespace Logistics.AppServices
             _Repository = repository;
         }
 
-        public async Task<List<AddressDto>> GetAll()
+        public async Task<List<AddressDto>> GetAll(long userId)
         {
             try
             {
-                var list = _Repository.GetAll();
+                var list = _Repository.GetAll().Where(a=>a.UserId==userId);
                 var res = Mapper.Map(list).ToANew<List<AddressDto>>();
                 return await Task.FromResult(res);
             }

@@ -14,5 +14,7 @@ namespace Logistics.AppServices
 
         Task<UserDto> LoginByPwd(string name, string pwd);
         Task<UserDto> Register(RegisterDto dtos);
+        Task<UserDto> Authentication(AuthenticationDto dtos);
+        
     }
 }

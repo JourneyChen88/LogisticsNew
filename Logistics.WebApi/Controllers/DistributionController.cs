@@ -9,15 +9,15 @@ namespace Logistics.WebApi.Controllers
 {
     [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class DistributionController : ControllerBase
     {
-        private readonly IAccountAppService _appservice;
+        private readonly IDistributionAppService _appservice;
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="appservice"></param>
-        public AccountController(IAccountAppService appservice)
+        public DistributionController(IDistributionAppService appservice)
         {
             _appservice = appservice;
         }
@@ -26,37 +26,42 @@ namespace Logistics.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<AjaxResponse<List<AccountDto>>> GetAll()
+        public async Task<AjaxResponse<List<DistributionDto>>> GetAll()
         {
             var res = await _appservice.GetAll();
-            return new AjaxResponse<List<AccountDto>>(res);
+            return new AjaxResponse<List<DistributionDto>>(res);
         }
+
+
         /// <summary>
         /// 获取分页
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<AjaxResponse<List<AccountDto>>> GetPageList(int index, int size)
+        public async Task<AjaxResponse<List<DistributionDto>>> GetPageList(int index)
         {
-            var res = await _appservice.GetPageList(index, size);
-            return new AjaxResponse<List<AccountDto>>(res);
+            var res = await _appservice.GetPageList(index, 8);
+            return new AjaxResponse<List<DistributionDto>>(res);
         }
+
         /// <summary>
-        /// 获取单个
+        /// 根据接单人获取分页
         /// </summary>
+        /// <param name="deliver">发单人</param>
+        /// <param name="index">分页序号</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<AjaxResponse<AccountDto>> GetById(Guid id)
+        public async Task<AjaxResponse<List<DistributionHisDto>>> GetByDeliver(long deliver, int index)
         {
-            var res = await _appservice.GetById(id);
-            return new AjaxResponse<AccountDto>(res);
+            var res = await _appservice.GetByDeliver(deliver, index, 8);
+            return new AjaxResponse<List<DistributionHisDto>>(res);
         }
         /// <summary>
         /// 增加
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<AjaxResponse<bool>> Add([FromBody]AccountCreateInput dto)
+        public async Task<AjaxResponse<bool>> Add([FromBody]DistributionCreateInput dto)
         {
             var res = await _appservice.Add(dto);
             return new AjaxResponse<bool>(res);
@@ -76,7 +81,7 @@ namespace Logistics.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<AjaxResponse<bool>> Update([FromBody]AccountDto dto)
+        public async Task<AjaxResponse<bool>> Update([FromBody]DistributionDto dto)
         {
             var res = await _appservice.Update(dto);
             return new AjaxResponse<bool>(res);

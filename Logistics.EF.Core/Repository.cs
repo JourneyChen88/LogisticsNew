@@ -25,10 +25,17 @@ namespace Logistics.EF.Core
 
         public bool Add(T entity)
         {
-            _dbSet.Add(entity);
+          var res=  _dbSet.Add(entity);
             return _context.SaveChanges() > 0;
 
         }
+        public bool AddRange(List<T> entitys)
+        {
+             _dbSet.AddRange(entitys);
+            return _context.SaveChanges() > 0;
+
+        }
+
         public bool Delete(object id)
         {
             var entity = _dbSet.Find(id);

@@ -16,7 +16,7 @@ namespace Logistics.AppServices
         /// Ãû³Æ
         /// </summary>
         [StringLength(LogisticsConsts.MaxLength64)]
-        public string Name { get; set; }
+        public string UserName { get; set; }
 
         public string PassWord { get; set; }
       

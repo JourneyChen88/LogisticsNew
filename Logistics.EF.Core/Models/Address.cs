@@ -9,7 +9,7 @@ namespace Logistics.EF.Core
 
     public class Address : EntityBase
     {
-
+        public virtual long UserId { get; set; }
 
         /// <summary>
         /// 联系人
@@ -23,10 +23,15 @@ namespace Logistics.EF.Core
         public virtual String LinkPhone { get; set; }
 
         /// <summary>
-        /// 详细信息
+        /// 区域（省市县）
+        /// </summary>
+        public virtual String Location { get; set; }
+
+        /// <summary>
+        /// 详细地址
         /// </summary>
         [StringLength(LogisticsConsts.MaxLength256)]
-        public virtual String DetailInfo { get; set; }
+        public virtual String Detail { get; set; }
 
         
 

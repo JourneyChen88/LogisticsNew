@@ -60,6 +60,24 @@ namespace Logistics.AppServices
             }
          
         }
+        public async Task<UserDto> Authentication(AuthenticationDto dtos)
+        {
+            var entity = _Repository.GetById(dtos.Id);
+            entity.IsAuthentication = true;
+            entity.RealName = dtos.RealName;
+            entity.IdCardNo = dtos.IdCardNo;
+         var res = _Repository.Update(entity);
+            if (res)
+            {
+                var dto = Mapper.Map(entity).ToANew<UserDto>();
+                return await Task.FromResult(dto);
+            }
+            else
+            {
+                return null;
+            }
+
+        }
     }
 }
 

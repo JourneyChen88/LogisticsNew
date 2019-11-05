@@ -9,7 +9,7 @@ namespace Logistics.EF.Core
     public class EntityBase<TPrimaryKey> 
     {
         /// <summary>唯一标识</summary>
-        public Guid Id { get; set; }
+        public TPrimaryKey Id { get; set; }
         /// <summary>
         /// 创建世间
         /// </summary>

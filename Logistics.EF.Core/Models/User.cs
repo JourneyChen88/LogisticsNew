@@ -18,12 +18,30 @@ namespace Logistics.EF.Core
         public string Phone { get; set; }
 
         /// <summary>
-        /// 名称
+        /// 用户名
         /// </summary>
         [StringLength(LogisticsConsts.MaxLength64)]
-        public string Name { get; set; }
+        public string UserName { get; set; }
 
         public string PassWord { get; set; }
+
+
+        /// <summary>
+        /// 真实名称
+        /// </summary>
+        [StringLength(LogisticsConsts.MaxLength64)]
+        public string RealName { get; set; }
+
+        /// <summary>
+        /// 身份证号
+        /// </summary>
+        [StringLength(20)]
+        public string IdCardNo { get; set; }
+
+        /// <summary>
+        /// 是否实名认证
+        /// </summary>
+        public bool IsAuthentication { get; set; }
         /// <summary>
         /// 备注
         /// </summary>

@@ -10,10 +10,7 @@ namespace Logistics.AppServices
     {
         /// <summary>唯一标识</summary>
         public TPrimaryKey Id { get; set; }
-        /// <summary>
-        /// 创建世间
-        /// </summary>
-        public virtual DateTime CreationTime { get; set; } = DateTime.Now;
+      
      
     }
 }

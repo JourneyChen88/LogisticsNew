@@ -11,17 +11,60 @@ namespace Logistics.AppServices
     {
         private IRepository<Account, Guid> _Repository;
 
-        public AccountAppService(IRepository<Account, Guid> repository)
+        private IRepository<DataDic, Guid> _dicRepository;
+
+        public AccountAppService(IRepository<Account, Guid> repository
+                                                 , IRepository<DataDic, Guid> dicRepository)
         {
             _Repository = repository;
+            _dicRepository = dicRepository;
         }
 
-        public async Task<List<AccountDto>> GetAll()
+        public async Task<List<AccountDto>> GetAll(long userId)
         {
             try
             {
-                var list = _Repository.GetAll().OrderByDescending(a => a.IsDefault);
-                var res = Mapper.Map(list).ToANew<List<AccountDto>>();
+                var list = _Repository.GetAll().OrderByDescending(a => a.IsDefault && a.UserId == userId);
+                var AccountTypeList = _dicRepository.GetAll().Where(a => a.TypeCode == "AccountType");
+                var res = (from l in list
+                           join at in AccountTypeList on l.AccountType equals at.ItemCode
+                           select new AccountDto
+                           {
+                               Id = l.Id,
+                               AccountNo = l.AccountNo,
+                               AccountType = l.AccountType,
+                               AccountTypeName = at.ItemName,
+                               BankName = l.BankName,
+                               IsDefault = l.IsDefault,
+                               UserId = l.UserId
+                           }).ToList();
+                return await Task.FromResult(res);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<AccountDto>> GetByAccountType(long userId, int accountType)
+        {
+            try
+            {
+                var list = _Repository.GetAll().OrderByDescending(a => a.IsDefault && a.UserId == userId && a.AccountType == accountType);
+              
+                var AccountTypeList = _dicRepository.GetAll().Where(a => a.TypeCode == "AccountType");
+                var res = (from l in list
+                           join at in AccountTypeList on l.AccountType equals at.ItemCode
+                           select new AccountDto
+                           {
+                               Id = l.Id,
+                               AccountNo = l.AccountNo,
+                               AccountType = l.AccountType,
+                               AccountTypeName = at.ItemName,
+                               BankName = l.BankName,
+                               IsDefault = l.IsDefault,
+                               UserId = l.UserId
+                           }).ToList();
                 return await Task.FromResult(res);
             }
             catch (Exception e)
@@ -30,11 +73,48 @@ namespace Logistics.AppServices
             }
 
         }
+        public async Task<List<AccountDto>> GetList()
+        {
+            try
+            {
+                var list = _Repository.GetAll().OrderByDescending(a => a.IsDefault);
+                var AccountTypeList = _dicRepository.GetAll().Where(a => a.TypeCode == "AccountType");
+                var res = (from l in list
+                           join at in AccountTypeList on l.AccountType equals at.ItemCode
+                           select new AccountDto
+                           {
+                               Id = l.Id,
+                               AccountNo = l.AccountNo,
+                               AccountType = l.AccountType,
+                               AccountTypeName = at.ItemName,
+                               BankName = l.BankName,
+                               IsDefault = l.IsDefault,
+                               UserId = l.UserId
+                           }).ToList();
+                return await Task.FromResult(res);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
 
+        }
         public async Task<List<AccountDto>> GetPageList(int pageIndex, int pageSize)
         {
             var list = _Repository.GetPageList(pageIndex, pageSize).OrderByDescending(a => a.IsDefault); ;
-            var res = Mapper.Map(list).ToANew<List<AccountDto>>();
+            var AccountTypeList = _dicRepository.GetAll().Where(a => a.TypeCode == "AccountType");
+            var res = (from l in list
+                       join at in AccountTypeList on l.AccountType equals at.ItemCode
+                       select new AccountDto
+                       {
+                           Id = l.Id,
+                           AccountNo = l.AccountNo,
+                           AccountType = l.AccountType,
+                           AccountTypeName = at.ItemName,
+                           BankName = l.BankName,
+                           IsDefault = l.IsDefault,
+                           UserId = l.UserId
+                       }).ToList();
             return await Task.FromResult(res);
         }
 

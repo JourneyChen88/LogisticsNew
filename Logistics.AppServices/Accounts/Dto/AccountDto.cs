@@ -10,26 +10,30 @@ namespace Logistics.AppServices
         /// <summary>
         /// 用户ID
         /// </summary>      
-        public virtual long UserId { get; set; }
+        public  long UserId { get; set; }
 
         /// <summary>
         /// 账号类型
         /// </summary>
-        public virtual int AccountType { get; set; }
+        public  int AccountType { get; set; }
+
+        public string AccountTypeName { get; set; }
 
         /// <summary>
         /// 账号
         /// </summary>      
-        public virtual String AccountNo { get; set; }
+        public  String AccountNo { get; set; }
+
+      
 
         /// <summary>
-        /// 所属银行类型
+        /// 银行类型
         /// </summary>
-        public virtual int? BankType { get; set; }
+        public string BankName { get; set; }
         /// <summary>
         /// 是否默认账户
         /// </summary>
-        public virtual Boolean IsDefault { get; set; }
+        public  Boolean IsDefault { get; set; }
 
     }
 }

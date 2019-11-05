@@ -10,8 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="EntityDto.cs" />
-    <Compile Remove="IEntityDto.cs" />
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Class2.cs" />
+    <Compile Remove="Migrations\20190910072059_init.cs" />
+    <Compile Remove="Migrations\20190910072059_init.Designer.cs" />
+    <Compile Remove="Migrations\20190927020721_UpdateBaseEntity12.cs" />
+    <Compile Remove="Migrations\20190927020721_UpdateBaseEntity12.Designer.cs" />
+    <Compile Remove="Migrations\20191013105717_updOrder123.cs" />
     <Compile Remove="RepositoryBase.cs" />
   </ItemGroup>
 

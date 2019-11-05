@@ -7,67 +7,79 @@ namespace Logistics.AppServices
 
     public class OrderDto : EntityDtoBase
     {
+
+        public virtual string OrderNo { get; set; }
         /// <summary>
-        /// 订单发起人
+        /// 寄件人
         /// </summary>
-        public virtual Guid OrderUser { get; set; }
+        public  long Sender { get; set; }
 
         /// <summary>
         /// 发单价
         /// </summary>
-        public virtual decimal Price { get; set; }
+        public  decimal Price { get; set; }
 
-        /// <summary>
-        /// 配送人
-        /// </summary>
-        public virtual Guid? DeliverUser { get; set; }
+      
         /// <summary>
         /// 发件地址
         /// </summary>
         [StringLength(LogisticsConsts.MaxLength64)]
-        public virtual string MailingAddress { get; set; }
+        public  string MailingAddress { get; set; }
 
         /// <summary>
         /// 发件经度
         /// </summary>
-        public virtual float MailingLng { get; set; }
+        public  float MailingLng { get; set; }
         /// <summary>
         /// 发件纬度
         /// </summary>
-        public virtual float MailingLat { get; set; }
+        public  float MailingLat { get; set; }
+
+        /// <summary>
+        /// 收件人
+        /// </summary>
+        public  string Receiver { get; set; }
+
+        /// <summary>
+        /// 收件人电话
+        /// </summary>
+        public  string ReceiverPhone { get; set; }
 
         /// <summary>
         /// 目的地
         /// </summary>
-        public virtual string Dstination { get; set; }
+        public  string Destination { get; set; }
 
         /// <summary>
         /// 目的地经度
         /// </summary>
-        public virtual float DestLng { get; set; }
+        public  float DestLng { get; set; }
 
         /// <summary>
         /// 目的地纬度
         /// </summary>
-        public virtual float DestLat { get; set; }
+        public  float DestLat { get; set; }
         /// <summary>
-        /// 数量
+        /// 图片路径
         /// </summary>
-        public virtual int Qty { get; set; }
+        public String PicPath1 { get; set; }
 
+        public String PicPath2 { get; set; }
+        public String PicPath3 { get; set; }
+        public String PicPath4 { get; set; }
 
 
         /// <summary>
         /// 最迟送到时间
         /// </summary>
-        public virtual DateTime? DeadLine { get; set; }
+        public  DateTime? DeadLine { get; set; }
 
 
 
         /// <summary>
         /// 订单状态
         /// </summary>
-        public virtual int OrderStatus { get; set; }
+        public  int OrderStatus { get; set; }
 
 
 
@@ -75,7 +87,7 @@ namespace Logistics.AppServices
         /// 备注
         /// </summary>
         [StringLength(LogisticsConsts.MaxLength256)]
-        public virtual String Remark { get; set; }
+        public  String Remark { get; set; }
 
     }
 }

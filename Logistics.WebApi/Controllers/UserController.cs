@@ -53,10 +53,28 @@ namespace Logistics.WebApi.Controllers
             var res = await _appservice.LoginByPwd(input.Phone, input.PassWord);
             return new AjaxResponse<UserDto>(res);
         }
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="dtos"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<AjaxResponse<UserDto>>  Register([FromBody]RegisterDto dtos)
         {
             var res = await _appservice.Register(dtos);
+            return new AjaxResponse<UserDto>(res);
+        }
+
+        /// <summary>
+        /// 实名认证
+        /// </summary>
+        /// <param name="dtos"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<AjaxResponse<UserDto>> Authentication([FromBody]AuthenticationDto dtos)
+        {
+            var res = await _appservice.Authentication(dtos);
             return new AjaxResponse<UserDto>(res);
         }
        

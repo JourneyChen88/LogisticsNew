@@ -18,7 +18,7 @@ namespace Logistics.EF.Core
         public virtual long UserId { get; set; }
 
         /// <summary>
-        /// 账号类型
+        /// 账号类型 1储蓄卡，2信用卡，0未知
         /// </summary>
         public virtual int AccountType { get; set; }
 
@@ -28,9 +28,11 @@ namespace Logistics.EF.Core
         public virtual String AccountNo { get; set; }
 
         /// <summary>
-        /// 所属银行类型
+        /// 银行类型
         /// </summary>
-        public virtual int? BankType { get; set; }
+        public virtual string BankName { get; set; }
+
+       
         /// <summary>
         /// 是否默认账户
         /// </summary>

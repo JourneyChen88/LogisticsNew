@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Logistics.EF.Core.Migrations
 {
     [DbContext(typeof(LogisticsDbContext))]
-    [Migration("20190921081540_adress")]
-    partial class adress
+    [Migration("20191027065635_updAddress_1027")]
+    partial class updAddress_1027
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,34 @@ namespace Logistics.EF.Core.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Logistics.EF.Core.Account", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AccountNo");
+
+                    b.Property<int>("AccountType");
+
+                    b.Property<string>("BankName");
+
+                    b.Property<int>("BankType");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool>("IsDefault");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<long>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Account");
+                });
 
             modelBuilder.Entity("Logistics.EF.Core.Address", b =>
                 {
@@ -30,7 +58,7 @@ namespace Logistics.EF.Core.Migrations
 
                     b.Property<long?>("CreatorUserId");
 
-                    b.Property<string>("DetailInfo")
+                    b.Property<string>("Detail")
                         .HasMaxLength(256);
 
                     b.Property<bool>("IsDefault");
@@ -42,35 +70,66 @@ namespace Logistics.EF.Core.Migrations
                     b.Property<string>("Linker")
                         .HasMaxLength(64);
 
+                    b.Property<string>("Location");
+
+                    b.Property<long>("UserId");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Asset");
+                    b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("Logistics.EF.Core.BankAccount", b =>
+            modelBuilder.Entity("Logistics.EF.Core.DataDic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AccountNo");
-
-                    b.Property<int>("AccountType");
-
-                    b.Property<int?>("BankType");
 
                     b.Property<DateTime>("CreationTime");
 
                     b.Property<long?>("CreatorUserId");
 
-                    b.Property<bool>("IsDefault");
-
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("ItemCode");
+
+                    b.Property<string>("ItemName");
+
+                    b.Property<string>("ItemRemark")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("TypeCode")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("TypeName")
+                        .HasMaxLength(64);
 
                     b.HasKey("Id");
 
-                    b.ToTable("BankAccount");
+                    b.ToTable("DataDic");
+                });
+
+            modelBuilder.Entity("Logistics.EF.Core.Distribution", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long>("Deliver");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<Guid>("OrderId");
+
+                    b.Property<DateTime?>("SignTime");
+
+                    b.Property<string>("Signer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Distribution");
                 });
 
             modelBuilder.Entity("Logistics.EF.Core.Evaluate", b =>
@@ -107,13 +166,11 @@ namespace Logistics.EF.Core.Migrations
 
                     b.Property<DateTime?>("DeadLine");
 
-                    b.Property<Guid?>("DeliverUser");
-
                     b.Property<float>("DestLat");
 
                     b.Property<float>("DestLng");
 
-                    b.Property<string>("Dstination");
+                    b.Property<string>("Destination");
 
                     b.Property<bool>("IsDeleted");
 
@@ -124,16 +181,28 @@ namespace Logistics.EF.Core.Migrations
 
                     b.Property<float>("MailingLng");
 
+                    b.Property<string>("OrderNo");
+
                     b.Property<int>("OrderStatus");
 
-                    b.Property<Guid>("OrderUser");
+                    b.Property<string>("PicPath1");
+
+                    b.Property<string>("PicPath2");
+
+                    b.Property<string>("PicPath3");
+
+                    b.Property<string>("PicPath4");
 
                     b.Property<decimal>("Price");
 
-                    b.Property<int>("Qty");
+                    b.Property<string>("Receiver");
+
+                    b.Property<string>("ReceiverPhone");
 
                     b.Property<string>("Remark")
                         .HasMaxLength(256);
+
+                    b.Property<long>("Sender");
 
                     b.HasKey("Id");
 
@@ -179,17 +248,25 @@ namespace Logistics.EF.Core.Migrations
 
                     b.Property<long?>("CreatorUserId");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<string>("IdCardNo")
+                        .HasMaxLength(20);
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(64);
+                    b.Property<bool>("IsAuthentication");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("PassWord");
 
                     b.Property<string>("Phone");
 
+                    b.Property<string>("RealName")
+                        .HasMaxLength(64);
+
                     b.Property<string>("Remark")
                         .HasMaxLength(1024);
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(64);
 
                     b.HasKey("Id");
 

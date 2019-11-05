@@ -7,30 +7,36 @@ namespace Logistics.AppServices
 {
 
     public class AddressDto : EntityDtoBase
-    {        
+    {
+        public  long UserId { get; set; }
         /// <summary>
         /// 联系人
         /// </summary>
         [StringLength(LogisticsConsts.MaxLength64)]
-        public virtual String Linker { get; set; }
+        public  String Linker { get; set; }
 
         /// <summary>
         /// 电话
         /// </summary>
-        public virtual String LinkPhone { get; set; }
+        public  String LinkPhone { get; set; }
 
         /// <summary>
-        /// 详细信息
+        /// 区域（省市县）
+        /// </summary>
+        public virtual String Location { get; set; }
+
+        /// <summary>
+        /// 详细地址
         /// </summary>
         [StringLength(LogisticsConsts.MaxLength256)]
-        public virtual String DetailInfo { get; set; }
+        public virtual String Detail { get; set; }
 
 
 
         /// <summary>
         /// 是否默认地址
         /// </summary>
-        public virtual Boolean IsDefault { get; set; }
+        public  Boolean IsDefault { get; set; }
 
     }
 }
