@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Logistics.AppServices;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace Logistics.WebApi.Controllers
 {
@@ -99,27 +101,29 @@ namespace Logistics.WebApi.Controllers
             var res = await _appservice.Update(dto);
             return new AjaxResponse<bool>(res);
         }
+        /// <summary>
+        /// 添加订单图片
+        /// </summary>
+        /// <param name="formCollection"></param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<bool> AddPic([FromForm] IFormCollection formCollection)
+        public async Task<bool> AddOrderPic([FromForm] IFormCollection formCollection)
         {
             bool result = false;
-            string webRootPath = _hostingEnvironment.WebRootPath;
-            string contentRootPath = _hostingEnvironment.ContentRootPath;
 
             FormFileCollection filelist = (FormFileCollection)formCollection.Files;
 
             foreach (IFormFile file in filelist)
             {
-                String Tpath = "/Order/";
+                string uploadPath = _hostingEnvironment.WebRootPath + $@"\Files\Pictures\";
                 string FileName = file.FileName;
-                string FilePath = contentRootPath + Tpath;
 
-                DirectoryInfo di = new DirectoryInfo(FilePath);
+                DirectoryInfo di = new DirectoryInfo(uploadPath);
 
 
                 if (!di.Exists) { di.Create(); }
 
-                using (FileStream fs = System.IO.File.Create(FilePath + FileName))
+                using (FileStream fs = System.IO.File.Create(uploadPath + FileName))
                 {
                     // 复制文件
                     file.CopyTo(fs);
@@ -130,5 +134,27 @@ namespace Logistics.WebApi.Controllers
             }
             return result;
         }
+
+       
+        [HttpGet]
+        public async Task<AjaxResponse<string>> GetOrderPic(string fileName)
+        {
+            string strbaser64 = string.Empty;
+            string path = Directory.GetCurrentDirectory() + "\\Order\\" + fileName;
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                byte[] byteArray = new byte[fs.Length];
+                fs.Read(byteArray, 0, byteArray.Length);
+                strbaser64 = Convert.ToBase64String(byteArray);
+            }
+            
+            return new AjaxResponse<string>(strbaser64); 
+         
+
+        }
+
+
+      
     }
+ 
 }

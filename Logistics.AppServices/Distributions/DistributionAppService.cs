@@ -53,12 +53,14 @@ namespace Logistics.AppServices
 
         public async Task<List<DistributionHisDto>> GetByDeliver(long deliver, int index, int size)
         {
-            var list = _Repository.GetPageList(index, size).Where(a => a.Deliver == deliver);
+            var list = _Repository.GetAll().Where(a => a.Deliver == deliver);//.Skip(index * size).Take(size);//.Take((index+1)*size)
+            var data = _datadicRepository.GetAll().Where(a => a.TypeCode == "OrderStatus");
+            var user = _userRepository.GetAll();
             var res = (from l in list
-                       join u in _userRepository.GetAll() on l.Deliver equals u.Id
+                       join u in user on l.Deliver equals u.Id
                        join o in _orderRepository.GetAll() on l.OrderId equals o.Id
-                       join su in _userRepository.GetAll() on o.Sender equals su.Id
-                       join d in _datadicRepository.GetAll().Where(a => a.TypeCode == "OrderStatus") on o.OrderStatus equals d.ItemCode
+                       join su in user on o.Sender equals su.Id
+                       join d in data on o.OrderStatus equals d.ItemCode
 
                        select new DistributionHisDto
                        {
@@ -82,8 +84,8 @@ namespace Logistics.AppServices
                            PicPath4 = o.PicPath4,
                            Receiver = o.Receiver,
                            ReceiverPhone = o.ReceiverPhone,
-                           StatusInfo=d.ItemName,
-                           StatusDetail = o.OrderStatus == 1 ? "收件人：【" + o.Receiver + "】" + o.ReceiverPhone :
+                           StatusInfo = d.ItemName,
+                           StatusDetail = o.OrderStatus == 2 ? "收件人：【" + o.Receiver + "】" + o.ReceiverPhone :
                           "签收人：" + l.Signer + "签收时间：" + l.SignTime.Value.ToString("yyyy-MM-dd HH:mm")
 
                        }).ToList();

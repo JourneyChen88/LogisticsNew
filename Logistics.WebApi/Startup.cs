@@ -3,9 +3,11 @@ using Logistics.EF.Core;
 using Logistics.EF.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -45,17 +47,23 @@ namespace Logistics.WebApi
                    
                 }
             }
-
+            services.AddSignalR();
             //注册仓储
             services.AddScoped(typeof(IRepository<, >), typeof(Repository<, >));
-           
+
             //services.AddScoped<IUserAppService, UserAppService>();
             //services.AddScoped<IOrderAppService, OrderAppService>();
             //services.AddScoped<IAddressAppService, AddressAppService>();
             //services.AddScoped<IAccountAppService, AccountAppService>();
             //services.AddScoped<IDataDicAppService, DataDicAppService>();
             //services.AddScoped<IDistributionAppService, DistributionAppService>();
-
+            #region CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://*:5008").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+            });
+            #endregion
             //注册swager生成器
             services.AddSwaggerGen(c =>
             {
@@ -84,7 +92,17 @@ namespace Logistics.WebApi
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
+            app.UseDefaultFiles();
 
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/Files")),
+                RequestPath = new PathString("/src")
+            });
+            app.UseSignalR(builder => builder.MapHub<Chat>("/Chat"));
+            //{
+            //    routes.MapHub<Chat>("/Chat");
+            //});
             //app.UseSwaggerUi ( typeof ( Startup ).GetTypeInfo ( ).Assembly, settings =>
             //        {
             //            settings.GeneratorSettings.DefaultPropertyNameHandling = PropertyNameHandling.CamelCase;
@@ -94,9 +112,7 @@ namespace Logistics.WebApi
 
             app.UseMvc();
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-
+            app.UseCors("AllowSpecificOrigin");
             app.UseSwagger();
             //启用中间件服务对swagger-ui，指定Swagger JSON终结点
             app.UseSwaggerUI(c =>
@@ -126,42 +142,6 @@ namespace Logistics.WebApi
             }
             return new Dictionary<Type, Type[]>();
         }
-        /// <summary>
-        /// 注册指定程序集中的服务
-        /// </summary>
-        /// <param name="assemblyNames">程序集名的字典</param>
-        /// <param name="services">IServiceCollection类型的对象</param>
-        public void BatchInjectService(IDictionary<string, string> assemblyNames, IServiceCollection services)
-        {
-            Type iTransentInject = typeof(ITransientDependency);
-            foreach (var assemblyItem in assemblyNames)
-            {
-                string assemblyInterName = assemblyItem.Key;
-                string assemblyObjName = assemblyItem.Key;
-                Type[] interTypes = Assembly.Load(assemblyInterName).GetTypes().Where(t => t.IsInterface  && t != iTransentInject ).ToArray();
-                foreach (Type interType in interTypes)
-                {
-                    Type objType = Assembly.Load(assemblyObjName).GetTypes().Where(t => t.IsClass && interType.IsAssignableFrom(t)).SingleOrDefault();
-                    if (objType == null)
-                    {
-                        throw new Exception($"********************当前接口={interType.Name}没有找到对应的实现类********************");
-                    }
-                    IList<Type> inJectTypeList = objType.GetInterfaces().Where(i => i == iTransentInject).ToList();
-                    if (inJectTypeList.Count != 1)
-                    {
-                        throw new Exception($"********************当前接口={interType.Name}没有找到合适的生命周期类型********************");
-                    }
-                    Type inJectType = inJectTypeList.Single();
-                    string inJectTypeName = inJectType.Name;
-                    switch (inJectTypeName)
-                    {
-                        case "ITransentInject": services.AddTransient(interType, objType); break;
-                        case "IScopeInject": services.AddScoped(interType, objType); break;
-                        case "ISingleTonInject": services.AddSingleton(interType, objType); break;
-                        default: throw new Exception($"********************当前接={interType.Name}没有指定注入实例的生命周期********************"); break;
-                    }
-                }
-            }
-        }
+     
     }
 }

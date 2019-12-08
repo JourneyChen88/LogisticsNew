@@ -47,7 +47,7 @@ namespace Logistics.WebApi.Controllers
         /// <summary>
         /// 根据接单人获取分页
         /// </summary>
-        /// <param name="deliver">发单人</param>
+        /// <param name="deliver">接单人</param>
         /// <param name="index">分页序号</param>
         /// <returns></returns>
         [HttpGet]
